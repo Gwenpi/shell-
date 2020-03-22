@@ -4,6 +4,10 @@
 要求执行脚本的用户在安装目录下有创建目录的权限。
 source install.sh
 
+已测试的jdk包:
+openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz
+jdk-13.0.2_linux-x64_bin.tar.gz
+jdk-8u241-linux-x64.tar.gz
 
 
 涉及路径即文件
