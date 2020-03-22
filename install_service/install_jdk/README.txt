@@ -1,0 +1,20 @@
+使用方法:
+将需要安装的jdk包，放到脚本的相同目录下。
+source install.sh
+
+
+
+涉及路径即文件
+/usr/local/jdk-****
+/etc/profile
+
+安装解压完之后会判断/etc/profile中有没有JAVA_HOME
+如果不存在就往里添加JAVA_HOME并重置PATH
+
+建议在配置之间，初始化的环境变量PATH,因为如果之前配置过其他的环境变量，会导致PATH重复之前的环境变量
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+MYSQL_HOME=xxx
+NGINX_HOME=xxx
+JAVA_HOME=xxx
+export PATH=${PATH}:${MYSQL_HOME}/bin:${NGINX_HOME}/bin:${JAVA_HOME}/bin

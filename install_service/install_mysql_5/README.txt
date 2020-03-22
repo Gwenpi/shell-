@@ -7,15 +7,17 @@ CentOS7
 
 已经测试的版本：
 mysql 5.7.28
+mysql 5.7.29
 
 
-mysql5版本需要的依赖：
+mysql5版本需要的依赖（联网状态下会执行安装，其他情况请自行下载）：
 1.libaio库
 2.net-tools
 
 使用说明:
-sh install_mysql_5.sh
-最后会提示要不要更改root密码和创建远程连接用户。按提示走就行。
+source install.sh
+输入mysql需要开放的端口号。
+安装完之后，会提示是否需要修改原始的root密码，和是否需要创建一个远程连接用户。
 
 
 所涉及的目录:
@@ -25,20 +27,17 @@ sh install_mysql_5.sh
 data目录：/data/mysql/data
 binlogs目录：/data/mysql/binlogs
 
-创建的文件：
+创建的service文件：
 /usr/lib/systemd/system/mysqld.service
 
 删除的文件：
 /etc/my.cnf
 
-开放的端口:你输入的端口
+开放的mysql端口:你输入的端口
 
-大概流程：
-source insttall_mysql_5.sh
-输入mysql需要开放的端口号。
-安装完之后，会提示是否需要修改原始的root密码，和是否需要创建一个远程连接用户。
+注意:防火墙请自行开放。
 
 一般空机器安装是不会发送什么问题。
-如果是之前安装过mysql,可能会出现目录冲突
+如果是之前安装过mysql,可能会出现目录冲突,所以安装前请确保没有所涉及的目录
 
 

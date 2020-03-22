@@ -21,7 +21,7 @@ if [ "$?" = "0" ];then
     read -p "$port端口被占用是否继续(继续y/退出 其他)：" input
     if [ "$input" != "y" ];then
         echo "开始退出"
-        exit
+        exit 1
     fi
 fi
 
@@ -30,7 +30,7 @@ echo "===开始检测当前环境==="
 rpm -qa|grep mysql  
 if [ "$?" = "0" ];then
     echo "已经安装mysql,请卸载，并删除之前的配置文件，开始退出"
-    exit
+    exit 1
 fi
 #检测mysql用户和用户组
 cat /etc/group | grep mysql 
@@ -44,7 +44,7 @@ fi
 groups mysql |grep "mysql : mysql"
 if [ "$?" != "0" ];then
     echo "不存在mysql:mysql,请手动添加，开始退出"
-    exit
+    exit 1
 fi
 
 
@@ -57,7 +57,7 @@ echo "开始安装libaio依赖"
 yum install libaio -y 
 if [ "$?" != "0" ];then
     echo "安装失败，开始退出"
-    exit
+    exit 1
 else
     echo "安装libaio包成功"
 fi
@@ -71,7 +71,7 @@ mysqlPack=$(ls $script_dir|grep mysql-5*gz)
 
 if [ -z "$mysqlPack" ];then
     echo "脚本的同级目录下没有mysql5版本的.gz结尾的安装包，请放入安装包，开始退出"
-    exit
+    exit 1
 fi
 
 #因为解压完后会生成一个mysql*的文件夹。所以这里创建一个mysql还有一个临时文件夹
@@ -84,19 +84,20 @@ if [ ! -d $mysqlTempDir ];then
     mkdir $mysqlTempDir
 else
     echo "已存在/usr/local/mysql_temp_wp目录,请确认无用后删除,开始退出"
-    exit
+    exit 1
 fi
 
 if [ ! -d $mysqlDir ];then
     mkdir $mysqlDir
 else
     echo "已存在/usr/local/mysql目录,请确认无用后删除,开始退出"
-    exit
+    exit 1
 fi
 
 tar zxvf $mysqlPack -C $mysqlTempDir 
 if [ "$?" != "0" ];then
     echo "解压失败开始退出"
+    exit 1
 else
     echo "解压成功"
 fi
@@ -120,7 +121,6 @@ chown -R mysql.mysql /data/mysql
 #配置PATH可以让系统在使用mysql命令的时候，自动到PATH的路径下查找有没有相关命令
 echo "配置PATH"
 echo "export PATH=$PATH:/usr/local/mysql/bin" >> /etc/profile
-source /etc/profile
 
 echo "删除/etc/my.cnf"
 rm -f /etc/my.cnf
@@ -222,7 +222,7 @@ systemctl start mysqld
 read -p "请问需要设置root密码吗?(y/其他)" input
 if [ "$input" != "y" ];then
     echo "没有修改root密码,完成安装,初始密码在/usr/local/mysql/log/mysql_error.log,开始退出"
-    exit
+    exit 1
 fi
 read -p "请输入密码,用于设置root用户的密码:" password
 read -p "你输入的密码是${password},(继续y/重新输入 其他):" input
@@ -239,7 +239,7 @@ mysqlInitPass=$(echo ${string##* })
 mysql --connect-expired-password -uroot -p${mysqlInitPass} -e "alter user 'root'@'localhost' identified by '${password}';"
 if [ "$?" != "0" ];then
     echo "设置失败,请手动设置,初始密码在/usr/local/mysql/log/mysql_error.log,开始退出"
-    exit
+    exit 1
 else
     echo "设置成功"
 fi
@@ -249,7 +249,7 @@ fi
 read -p "请问需要创建远程连接账户吗？(y/其他):" input
 if [ "$input" != "y" ];then
     echo "没有创建远程连接账户，开始退出"
-    exit
+    exit 1
 fi
 
 read -p "请输入远程连接账户的账户名:" userRCU
@@ -274,7 +274,7 @@ echo "开始创建远程连接用户"
 mysql --connect-expired-password -uroot -p${password} -e "GRANT ALL PRIVILEGES ON *.* TO '${userRCU}'@'%' IDENTIFIED BY '${pass1RCU}' WITH GRANT OPTION;"
 if [ "$?" != "0" ];then
     echo "创建远程连接用户失败，开始退出"
-    exit
+    exit 1
 fi
 echo "创建完成，请自行开放防火墙端口"
 
