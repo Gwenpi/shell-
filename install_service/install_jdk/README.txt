@@ -2,10 +2,6 @@
 将需要安装的jdk包，放到脚本的相同目录下。
 source install.sh
 
-已测试的jdk包:
-openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz
-jdk-13.0.2_linux-x64_bin.tar.gz
-jdk-8u241-linux-x64.tar.gz
 
 
 涉及路径即文件
