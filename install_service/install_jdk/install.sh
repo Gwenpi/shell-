@@ -2,7 +2,7 @@
 
 script_dir="$(dirname -- "$(readlink -f -- "$0")")"
 
-sh $script_dir/install_java.sh
+sh $script_dir/install_jdk.sh
 
 if [ "$?" != "0" ];then
     echo "安装openJDK失败"
