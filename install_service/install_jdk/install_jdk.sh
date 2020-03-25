@@ -13,7 +13,6 @@ if [ "$res" != "1" ];then
     exit 1
 fi
 
-jdkPack=$(find $script_dir -name "*.gz" -o -name "*.tgz")
 temp=$(cat $script_dir/install_jdk.conf|grep "installPath")
 installPath=${temp#*=}
 
@@ -23,20 +22,17 @@ if [ ! -d $installPath ];then
 fi
 
 echo "开始解压"
-install_temp_dir="${installPath}/temp_wp_321462"
-if [ ! -d $install_temp_dir ];then
-    mkdir $install_temp_dir
+jdkPack=$(find $script_dir -name "*.gz" -o -name "*.tgz")
+tar -zxvf $jdkPack -C $installPath --strip-components 1
+if [ "$?" != "0" ];then
+    echo "解压失败，开始退出"
+    exit 1
 fi
 
 
-tar -zxvf $jdkPack -C $install_temp_dir
-jdkName=$(ls $install_temp_dir)
-mv ${install_temp_dir}/$jdkName ${installPath}/
-rmdir ${install_temp_dir}
-
 cat /etc/profile|grep JAVA_HOME
 if [ "$?" != "0" ];then
-    JAVA_HOME=${installPath}/$jdkName
+    JAVA_HOME=${installPath}
     JRE_HOME=${JAVA_HOME}/jre
     echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile
     echo "export JRE_HOME=$JRE_HOME" >> /etc/profile
