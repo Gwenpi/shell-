@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\install_service"
+    "\\install_service",
+    "\\install_service\\install_elasticsearch",
+    "\\install_service\\install_nginx"
   ],
-  "SelectedNode": "\\install_service\\install_elasticsearch",
+  "SelectedNode": "\\install_service\\install_nginx",
   "PreviewInSolutionExplorer": false
 }
