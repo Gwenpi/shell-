@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\install_service",
-    "\\install_service\\install_elasticsearch",
-    "\\install_service\\install_nginx"
+    "\\install_service\\install_nginx",
+    "\\install_service\\install_redis"
   ],
-  "SelectedNode": "\\install_service\\install_nginx",
+  "SelectedNode": "\\install_service\\install_nginx\\install_nginx.sh",
   "PreviewInSolutionExplorer": false
 }
