@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\install_service",
-    "\\install_service\\install_nginx",
-    "\\install_service\\install_redis"
+    "\\install_service"
   ],
-  "SelectedNode": "\\install_service\\install_nginx\\install_nginx.sh",
+  "SelectedNode": "\\install_service\\install_jdk",
   "PreviewInSolutionExplorer": false
 }
