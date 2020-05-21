@@ -1,12 +1,12 @@
+功能说明
+安装elasticsearch，设置log和data的路径,Xmx和Xms大小。
+完成一些基本的配置。
+
+依赖：
+elasticsearch对应版本指定的对应版本的jdk，这个自行安装
+
 使用方法
+1.将安装包放到脚本路径下,脚本路径下只允许放一个es安装包，然后脚本会指定该包。
+2.配置install_elasticsearch.conf配置基础的设置
+3.开始安装：
 sh install_elasticsearch.sh
-
-涉及的目录:
-install_elasticsearch.conf中设置的目录
-
-相关更改:
-添加elasticsearch用户和用户组
-并修改你设置的ES根目录的chown为elasticsearch:elasticsearch
-
-之后会对ES做一些简单的配置，就是单点ES的配置。让你可以直接启动。
-如果要做ES集群，请自行更改配置。
