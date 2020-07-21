@@ -1,9 +1,22 @@
 #!/bin/bash
 
 #目前只用于空机装jdk
-#并没有考虑更新jdk的情况
+#现在已经支持jdk更新
 
 script_dir="$(dirname -- "$(readlink -f -- "$0")")"
+
+
+function checkPath()
+{
+    path=$1
+    if [ -d $path ];then
+        echo "$path 安装路径已经存在,请确认安装的路径之后，再运行脚本，开始退出"
+        exit 1
+    else
+        echo "$path 不存在,开始创建"
+        mkdir -p $path
+    fi
+}
 
 
 res=$(find $script_dir -name "*.gz" -o -name "*.tgz"|wc -l)
@@ -16,10 +29,7 @@ fi
 temp=$(cat $script_dir/install_jdk.conf|grep "installPath")
 installPath=${temp#*=}
 
-if [ ! -d $installPath ];then
-    echo "$installPath 安装路径不存在,请自行创建，开始退出"
-    exit 1
-fi
+checkPath $installPath
 
 echo "开始解压"
 jdkPack=$(find $script_dir -name "*.gz" -o -name "*.tgz")
@@ -31,16 +41,14 @@ fi
 
 
 cat /etc/profile|grep JAVA_HOME
-if [ "$?" != "0" ];then
-    JAVA_HOME=${installPath}
-    JRE_HOME=${JAVA_HOME}/jre
-    echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile
-    echo "export JRE_HOME=$JRE_HOME" >> /etc/profile
-    echo 'export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib' >> /etc/profile
-    echo 'export PATH=$PATH:$JAVA_HOME/bin' >> /etc/profile
-    echo "环境变量配置完成"
-else    
-    echo "/etc/profile中已经存在JAVA_HOME环境变量,请自行修改"
+if [ "$?" = "0" ];then    
+    echo "/etc/profile中已经存在JAVA_HOME环境变量,将优先使用当前安装的jdk"
 fi
 
-
+JAVA_HOME=${installPath}
+JRE_HOME=${JAVA_HOME}/jre
+echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile
+echo "export JRE_HOME=$JRE_HOME" >> /etc/profile
+echo 'export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib' >> /etc/profile
+echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
+echo "环境变量配置完成"

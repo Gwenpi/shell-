@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\install_service"
   ],
-  "SelectedNode": "\\backup_data",
+  "SelectedNode": "\\install_service\\install_mysql58",
   "PreviewInSolutionExplorer": false
 }
