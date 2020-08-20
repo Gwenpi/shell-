@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\install_service"
+    "\\install_service",
+    "\\install_service\\install_jdk"
   ],
-  "SelectedNode": "\\install_service\\install_mysql58",
+  "SelectedNode": "\\install_service\\install_jdk\\install_jdk.sh",
   "PreviewInSolutionExplorer": false
 }

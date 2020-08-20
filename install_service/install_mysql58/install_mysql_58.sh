@@ -27,6 +27,9 @@ function checkPath()
     if [ ! -d "$path" ];then
         echo "不存在${path}路径,开始创建"
         mkdir -p $path
+    else
+        echo "${path}路径已经存在，确认之后再运行此脚本，开始退出"
+        exit 1
     fi
 }
 
@@ -57,6 +60,11 @@ getParam logPath
 getParam dataPath
 getParam port
 getParam serverName
+ls /etc/init.d/$serverName
+if [ "$?" = "0" ];then
+    echo "已经存在该服务,请修改服务名后再运行此脚本，开始退出"
+    exit 1
+fi
 
 
 isAlone=$(ls $script_dir|grep -E "^mysql-"|wc -l)
@@ -73,9 +81,9 @@ checkPath $installPath
 checkPath $logPath
 checkPath $dataPath
 
-if [[ $(file ${packName}|grep XZ) ]];then
+if [[ $(file ${packName}|grep -i XZ) ]];then
     tar Jxvf $script_dir/$packName -C $installPath --strip-components 1
-elif [[ $(file ${packName}|grep gzip) ]];then
+elif [[ $(file ${packName}|grep -i gzip) ]];then
     tar zxvf $script_dir/$packName -C $installPath --strip-components 1
 else
     echo "安装包文件格式不支持,开始退出"
@@ -181,7 +189,7 @@ sed -i ":label;N;s/basedir=\n/basedir=$sedInstallPath\n/;b label" $installPath/s
 cp $installPath/support-files/mysql.server /etc/init.d/$serverName
 chmod +644 /etc/init.d/$serverName 
 chkconfig --add $serverName
-chkconfig --list
+chkconfig $serverName on
 
 #ln -s ${installPath}/bin/mysql /usr/bin
 

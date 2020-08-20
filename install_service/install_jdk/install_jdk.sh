@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #目前只用于空机装jdk
-#现在已经支持jdk更新
+#并没有考虑更新jdk的情况
 
 script_dir="$(dirname -- "$(readlink -f -- "$0")")"
 
@@ -52,3 +52,4 @@ echo "export JRE_HOME=$JRE_HOME" >> /etc/profile
 echo 'export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib' >> /etc/profile
 echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
 echo "环境变量配置完成"
+

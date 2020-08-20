@@ -1,9 +1,11 @@
-使用方法
-将需要安装的tar.gz包放到与脚本相同的目录下，执行
-sh install_nginx.sh
+将nginx的安装包放在脚本目录下
 
-需要联网，会安装依赖pcre pcre-devel gcc zlib-devel
-或者安装依赖之后再执行脚本，因为脚本中使用的yum命令执行失败不会终止。
+配置install_nginx.conf，指定安装路径和服务名
 
-之后会配置nginx.service，并设置开机自启
-请手动systemctl start nginx启动服务，并自行开启防火墙端口。
+使用sh install_nginx.sh进行安装
+
+使用"service 指定的服务名 start"开启服务
+
+
+已测试版本：
+nginx-1.18.0.tar.gz
